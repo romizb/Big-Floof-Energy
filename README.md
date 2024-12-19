@@ -1,4 +1,5 @@
-# Big-Floof-Energy
+# Big-Floof-Energy <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVoFq3XlAYVa5ThUCMFuzv_C7zei7KhT9Nag&s" alt="Avatar" style="width:100px; height:100px; border-radius:50%;">
+
 
 ## Objective summary
 
@@ -39,7 +40,7 @@ Data will be supplied by the users through the web based platform. Data will the
 1.	Core Language: for implementing all functionality.
 -	Python 
 2.	Backend Features: to handle task logging, data storage, and web scraping.
--	Python 
+-	Python <img align="right" width="220" height="300" src="https://github.com/user-attachments/assets/d47b655c-9538-4e50-ba98-53faee59a488">
 3.	Frontend Features: for building a responsive and attractive user interface.
 -	Python (GUI), HTML, CSS, and JavaScript 
 4.	Database: for storing user data, task logs, and scraped information.
@@ -51,10 +52,10 @@ Data will be supplied by the users through the web based platform. Data will the
 -	Free (limited plan) platforms (like Heroku, AWS, or PythonAnywhere)
 
 
-<sub> **NOTE- This is the project proposal. Project details, functions, and platform use might alter whilst code writing progresses**.</sub>
 
-<img src="[/images/output/video1.gif](https://github.com/user-attachments/assets/d47b655c-9538-4e50-ba98-53faee59a488)" width="250" height="250"/>
-![jasmine gif](https://github.com/user-attachments/assets/d47b655c-9538-4e50-ba98-53faee59a488)
+> 📝: **NOTE**- This is the project proposal. Project details, functions, and platform use might alter whilst code writing progresses.
+
+
 
 
 
