@@ -53,6 +53,10 @@ Data will be supplied by the users through the web based platform. Data will the
 
 <sub> **NOTE- This is the project proposal. Project details, functions, and platform use might alter whilst code writing progresses**.</sub>
 
+<img src="[/images/output/video1.gif](https://github.com/user-attachments/assets/d47b655c-9538-4e50-ba98-53faee59a488)" width="250" height="250"/>
+![jasmine gif](https://github.com/user-attachments/assets/d47b655c-9538-4e50-ba98-53faee59a488)
+
+
 
 
 
