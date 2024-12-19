@@ -7,7 +7,7 @@ The aim of this project is to create a python based, user-friendly, web applicat
 ---
 ## How to install
 
-The project will upload as a web-based platform accessible from any device with an internet connection. Therefore, no software installation required for users. However, a login in profile will be needed.
+The project will upload as a web-based platform accessible from any device with an internet connection. Therefore, no software installation required for users. However, a login profile will be needed.
 
 ---
 ## How to run test for project
