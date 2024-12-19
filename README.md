@@ -2,7 +2,7 @@
 ![Banner Image Placeholder](https://github.com/romizb/Big-Floof-Energy/blob/main/jasmine%20banner.jpg)
 ## Objective summary
 
-The aim of this project is to create a python based, user-friendly, web application to streamline dog care and management among roommates. This application will allow roommates to collaboratively organize tasks such as walking, feeding, and providing water for the dog. The program will also integrate web scraping features to track discounts on dog food from various e-commerce websites, and supply weekly reports as CSV files, containing data on completed tasks, and spending on dog food. 
+The aim of this project is to create a python based, user-friendly, web application to streamline dog care and management among roommates. This application will allow roommates to collaboratively organize tasks such as walking, feeding, and providing water for the dog. The program will also integrate web scraping features to track discounts on dog food from various e-commerce websites, as well as be able to supply weekly reports as CSV files, containing data on completed tasks, and spending on dog food. 
 
 ---
 ## How to install
