@@ -24,7 +24,7 @@ Data will be supplied by the users through the web based platform. Data will the
 1.	**Requirements Analysis and Design**
 -	Define user requirements and design the layout.
 -	Outline the database schema and application architecture.
-2.	**Core Functionality Development (aka collaboration tool)** <img align="right" width="235" height="300" src="https://github.com/user-attachments/assets/d47b655c-9538-4e50-ba98-53faee59a488">
+2.	**Core Functionality Development** <img align="right" width="235" height="300" src="https://github.com/user-attachments/assets/d47b655c-9538-4e50-ba98-53faee59a488">
 -	Implement user authentication and profile management.
 -	Implement task logging, calendar features and availability planner features.
 3.	**Web Scraping Module**
@@ -40,18 +40,18 @@ Data will be supplied by the users through the web based platform. Data will the
 
 ---
 ## Technical Stack
-1.	Core Language: for implementing all functionality.
+1.	**Core Language:** for implementing all functionality.
 -	Python 
-2.	Backend Features: to handle task logging, data storage, and web scraping.
+2.	**Backend Features:** to handle task logging, data storage, and web scraping.
 -	Python 
-3.	Frontend Features: for building a responsive and attractive user interface.
+3.	**Frontend Features:** for building a responsive and attractive user interface.
 -	Python (GUI), HTML, CSS, and JavaScript 
-4.	Database: for storing user data, task logs, and scraped information.
+4.	**Database:** for storing user data, task logs, and scraped information.
 -	SQLite 
 -	CSV files as additional storage options for portability.
-5.	Web Scraping: to scrape e-commerce websites.
+5.	**Web Scraping:** to scrape e-commerce websites.
 -	Libraries and Requests 
-6.	Hosting: to deploy the platform for free online
+6.	**Hosting:** to deploy the platform for free online
 -	Free (limited plan) platforms (like Heroku, AWS, or PythonAnywhere)
 
 
