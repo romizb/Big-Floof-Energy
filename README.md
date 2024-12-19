@@ -24,7 +24,7 @@ Data will be supplied by the users through the web based platform. Data will the
 1.	**Requirements Analysis and Design**
 -	Define user requirements and design the layout.
 -	Outline the database schema and application architecture.
-2.	**Core Functionality Development (aka collaboration tool)** <img align="right" width="220" height="300" src="https://github.com/user-attachments/assets/d47b655c-9538-4e50-ba98-53faee59a488">
+2.	**Core Functionality Development (aka collaboration tool)** <img align="right" width="235" height="300" src="https://github.com/user-attachments/assets/d47b655c-9538-4e50-ba98-53faee59a488">
 -	Implement user authentication and profile management.
 -	Implement task logging, calendar features and availability planner features.
 3.	**Web Scraping Module**
@@ -56,7 +56,7 @@ Data will be supplied by the users through the web based platform. Data will the
 
 
 ---
-> 📝: **NOTE**- This is the project proposal. Project details, functions, and platform use might alter whilst code writing progresses.
+> 📝: **NOTE**- This is the project **proposal**. Project details, functions, and platform use might alter whilst code writing progresses.
 
 
 ![Footer Placeholder](https://github.com/romizb/Big-Floof-Energy/blob/main/happy%20coding%20banner.png)
