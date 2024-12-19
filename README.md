@@ -1,6 +1,5 @@
-# Big-Floof-Energy 
-![Banner Image Placeholder](https://via.placeholder.com/800x200.png?text=Big+Floof+Energy+Project)
-
+# Big Floof Energy (BFE) 
+![Banner Image Placeholder](https://github.com/romizb/Big-Floof-Energy/blob/main/jasmine%20banner.jpg)
 ## Objective summary
 
 The aim of this project is to create a python based, user-friendly, web application to streamline dog care and management among roommates. This application will allow roommates to collaboratively organize tasks such as walking, feeding, and providing water for the dog. The program will also integrate web scraping features to track discounts on dog food from various e-commerce websites, and supply weekly reports as CSV files, containing data on completed tasks, and spending on dog food. 
@@ -60,7 +59,7 @@ Data will be supplied by the users through the web based platform. Data will the
 > 📝: **NOTE**- This is the project proposal. Project details, functions, and platform use might alter whilst code writing progresses.
 
 
-![Footer Placeholder](https://via.placeholder.com/800x100.png?text=Happy+Coding!)
+![Footer Placeholder](https://github.com/romizb/Big-Floof-Energy/blob/main/happy%20coding%20banner.png)
 
 
 
