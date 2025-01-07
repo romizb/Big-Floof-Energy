@@ -63,8 +63,4 @@ Data will be supplied by the users through the web based platform. Data will the
 
 
 
-
-
-
-
-
+<sub>_This program was written during my MS.c program in [Weizmann Institute](https://www.weizmann.ac.il/pages/), as part of a [python course](https://github.com/szabgab/wis-python-course-2024-11), tought by [Gabor Sabo](https://szabgab.com/)._</sub>
