@@ -5,9 +5,13 @@ import pandas as pd
 import os
 
 # PostgreSQL database URL
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///bfe.db")  # Fallback to SQLite locally
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL", "sqlite:///bfe.db")
+# (hid this so flask can connect) DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///bfe.db")  # Fallback to SQLite locally
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+
+
 
 app = Flask(__name__)
 
