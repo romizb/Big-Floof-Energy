@@ -12,8 +12,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app = Flask(__name__)
 
 # SQLite Configure database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bfe.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bfe.db'
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
