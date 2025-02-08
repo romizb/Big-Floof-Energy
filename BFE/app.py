@@ -14,7 +14,7 @@ import os
 
 
 #railway trial
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///bfe.db")  # Uses SQLite locally
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:VXKBtFWnSmqSeWgVOhmlwzTPpLdfTdpo@roundhouse.proxy.rlwy.net:51773/railway")  # Uses SQLite locally
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
