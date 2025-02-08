@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from scraper import scrape_dog_food
 import pandas as pd
 import os
+from datetime import datetime
 
 
 # render trial
@@ -28,14 +29,49 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# Define Task Model
+## Define Task Model
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    task_name = db.Column(db.String(100), nullable=False)
+    task_type = db.Column(db.String(50), nullable=False)  # Walk, Feed, Custom
+    scheduled_time = db.Column(db.DateTime, nullable=False)  # For preset tasks
     completed = db.Column(db.Boolean, default=False)
+    custom_task_name = db.Column(db.String(100), nullable=True)  # For custom tasks
+    notes = db.Column(db.Text, nullable=True)  # Notes when marking complete
+    image_filename = db.Column(db.String(255), nullable=True)  # Image file path
+    
+#Create Predefined Daily Tasks
+from datetime import datetime, timedelta
 
+def create_daily_tasks():
+    today = datetime.today().date()
+
+    # Check if tasks already exist for today
+    existing_tasks = Task.query.filter(Task.scheduled_time >= today).all()
+    if existing_tasks:
+        return  # Avoid duplicate tasks
+
+    # Define daily walks and feeding times
+    daily_tasks = [
+        ("Walk", datetime.combine(today, datetime.strptime("07:00", "%H:%M").time())),
+        ("Walk", datetime.combine(today, datetime.strptime("12:00", "%H:%M").time())),
+        ("Walk", datetime.combine(today, datetime.strptime("18:00", "%H:%M").time())),
+        ("Walk", datetime.combine(today, datetime.strptime("22:00", "%H:%M").time())),
+        ("Feed", datetime.combine(today, datetime.strptime("08:00", "%H:%M").time())),
+        ("Feed", datetime.combine(today, datetime.strptime("19:00", "%H:%M").time()))
+    ]
+
+    # Add tasks to the database
+    for task_type, time in daily_tasks:
+        new_task = Task(task_type=task_type, scheduled_time=time)
+        db.session.add(new_task)
+
+    db.session.commit()
+
+#Ensure Tasks Are Created Daily
 with app.app_context():
     db.create_all()
+    create_daily_tasks()  # Ensure daily tasks are generated
+
 
 # Home route to display tasks
 @app.route('/', methods=['GET', 'POST'])
