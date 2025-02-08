@@ -4,12 +4,19 @@ from scraper import scrape_dog_food
 import pandas as pd
 import os
 
+
+# render trial
 # PostgreSQL database URL
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL", "sqlite:///bfe.db")
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL", "sqlite:///bfe.db")
 # (hid this so flask can connect) DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///bfe.db")  # Fallback to SQLite locally
+#app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+
+#railway trial
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///bfe.db")  # Uses SQLite locally
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 
 
 
