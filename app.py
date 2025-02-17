@@ -227,7 +227,16 @@ def add_task():
         task_date = request.form.get("task_date")
         new_task = Task(
             task_type=task_name,  # This should store the actual user input, not "Custom"
-            task_date=task_due_date,
+            # Extract task_due_date safely from form data
+            task_due_date = request.form.get('task_due_date')  # <-- Ensure this is the correct name
+            
+            # If it's missing, assign a default value (e.g., today’s date)
+            if not task_due_date:
+                task_due_date = datetime.today().strftime('%Y-%m-%d')
+            
+            # Use task_due_date properly
+            task_date = task_due_date
+
             completed=False
         )
         db.session.add(new_task)
