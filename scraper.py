@@ -13,6 +13,29 @@ DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:JpEcVVcazObHteBN
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 db = SQLAlchemy(app)
 
+
+# ✅ Function to check & fix missing columns
+def ensure_news_table():
+    with app.app_context():
+        with db.engine.connect() as connection:
+            # ✅ Add the "link" column if it doesn't exist
+            connection.execute(text("""
+                DO $$ 
+                BEGIN
+                    IF NOT EXISTS (
+                        SELECT 1 FROM information_schema.columns 
+                        WHERE table_name='news' AND column_name='link'
+                    ) THEN
+                        ALTER TABLE news ADD COLUMN link TEXT;
+                    END IF;
+                END $$;
+            """))
+            connection.commit()
+
+# ✅ Run the function when scraper.py is executed
+ensure_news_table()
+
+
 # Define News model
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True)
