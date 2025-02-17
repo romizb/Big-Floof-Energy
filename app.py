@@ -153,13 +153,13 @@ def home():
         
         task_data = {
             "id": task.id,
-            "task_type": task.task_type,
+            "task_type": task.custom_task_name if task.task_type == "Custom" else task.task_type,  # Show proper task name
             "task_date": task.task_date.strftime('%Y-%m-%d'),
             "completed": task.completed,
-            "custom_task_name": task.custom_task_name,
             "notes": task.notes,
             "completed_by": task.completed_by
         }
+
 
         task_category = task.task_type.split()[0]
 
@@ -223,20 +223,21 @@ def export_tasks():
 @app.route("/add_task", methods=["POST"])
 def add_task():
     if request.method == "POST":
-        task_name = request.form.get("task_name")  # Ensure this captures user input
+        task_name = request.form.get("task_name")  # User input for task name
         task_due_date = request.form.get("task_due_date")  # Fetch task date from form
 
         # If no date is provided, use today's date
         if not task_due_date:
             task_due_date = datetime.today().strftime('%Y-%m-%d')
 
-        # Convert task_due_date to proper format
+        # Convert task_due_date to date format
         task_date = datetime.strptime(task_due_date, '%Y-%m-%d').date()
 
-        # Create new task instance
+        # Create new task as a custom task
         new_task = Task(
-            task_type=task_name,  # Store the actual user input
-            task_date=task_date,  # Corrected variable usage
+            task_type="Custom",  # Ensuring it's marked as a custom task
+            custom_task_name=task_name,  # Save user input in the correct column
+            task_date=task_date,
             completed=False
         )
 
@@ -244,6 +245,7 @@ def add_task():
         db.session.commit()
 
     return redirect(url_for("home"))
+
 
 
 # -------------------------
