@@ -162,7 +162,14 @@ def home():
         grouped_tasks[task_date][task.task_type.split()[0]].append(task_data)
 
     # Get latest dog news
-    dog_news = fetch_dog_news()
+    with app.app_context():
+        # Ensure fetch_dog_news() is executed
+        fetch_dog_news()
+        dog_news = db.session.execute(text("SELECT title, link FROM news")).fetchall()
+    
+    # Convert fetched news into a list of dictionaries
+    dog_news = [{"title": row[0], "link": row[1]} for row in dog_news] if dog_news else []
+
 
     return render_template('index.html', grouped_tasks=grouped_tasks, username=username, dog_news=dog_news)
 
