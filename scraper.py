@@ -1,20 +1,19 @@
-from flask_sqlalchemy import SQLAlchemy
+import os
 import feedparser
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
-from app import db
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 
 # Initialize Flask App (only if running as standalone)
 app = Flask(__name__)
 
 # Database Configuration (SQLite Locally, PostgreSQL for Railway)
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:JpEcVVcazObHteBNTKKcGuOAPjDJVjQU@postgres.railway.internal:5432/railway")  # Default for local dev
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:JpEcVVcazObHteBNTKKcGuOAPjDJVjQU@postgres.railway.internal:5432/railway")  
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+db = SQLAlchemy(app)
 
-
-
-# for using using SQLAlchemy (so can work on railway)
+# Initialize news table (to avoid missing table issue)
 def initialize_news_table():
     with db.engine.connect() as connection:
         connection.execute(text('''
@@ -27,10 +26,9 @@ def initialize_news_table():
         '''))
         connection.commit()
 
-# Call this function before fetching news
 initialize_news_table()
 
-
+# Define News model
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
