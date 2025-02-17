@@ -1,22 +1,24 @@
+from flask_sqlalchemy import SQLAlchemy
 import feedparser
-import requests
-import random
-import time
+from apscheduler.schedulers.background import BackgroundScheduler
+from flask import Flask
 
+# Initialize Flask App (only if running as standalone)
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///bfe.db"
+db = SQLAlchemy(app)
 
-#to minimize slowdown of the program, scraping accurs every 30 min instead of every reload :)
-cached_news = None
-last_scraped_time = 0
+class News(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    link = db.Column(db.String(512), nullable=False)
+    published = db.Column(db.String(100), nullable=False)
+
+# Create scheduler instance
+scheduler = BackgroundScheduler()
 
 def fetch_dog_news():
-    global cached_news, last_scraped_time
-
-    # Refresh news every 30 minutes (1800 seconds)
-    if cached_news and time.time() - last_scraped_time < 1800:
-        return cached_news  # Return cached data if recent
-
-    print("Fetching fresh dog news...")  # Debugging
-
+    """ Scrape dog news and store it in the database """
     feed_urls = [
         "http://www.dogster.com/feed",
         "http://www.dogtipper.com/feed",
@@ -25,31 +27,21 @@ def fetch_dog_news():
         "https://www.avma.org/news/rss-feeds"
     ]
 
-    news_items = []
+    with app.app_context():
+        db.session.query(News).delete()  # Clear old news
+        for url in feed_urls:
+            feed = feedparser.parse(url)
+            for entry in feed.entries[:3]:  # Get top 3 articles
+                news_item = News(title=entry.title, link=entry.link, published=entry.published)
+                db.session.add(news_item)
+        db.session.commit()
+        print("News updated!")
 
-    for url in feed_urls:
-        feed = feedparser.parse(url)
-        for entry in feed.entries[:3]:  # Get only the first 3 articles
-            
-            news_items.append({
-                'title': entry.title,
-                'link': entry.link,
-                'published': entry.published,
-                
-            })
+# Add the scheduled job (runs every 6 hours)
+scheduler.add_job(fetch_dog_news, 'interval', hours=6)
+scheduler.start()
 
-    # Sort news items by published date, most recent first
-    news_items.sort(key=lambda x: x['published'], reverse=True)
-    cached_news = news_items[:3]  # Store in cache
-    last_scraped_time = time.time()  # Update last scraped time
-
-    return cached_news
-
-
-
-
-
-
-
-
-
+if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
+    fetch_dog_news()
