@@ -5,6 +5,8 @@ import os
 from datetime import datetime, timedelta
 from sqlalchemy.sql.expression import func
 from apscheduler.schedulers.background import BackgroundScheduler
+from sqlalchemy import text
+
 
 
 # Initialize Flask app
