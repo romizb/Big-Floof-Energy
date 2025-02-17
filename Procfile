@@ -1,1 +1,1 @@
-web: python BFE/app.py
+web: python app.py
