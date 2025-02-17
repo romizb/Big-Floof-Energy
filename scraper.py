@@ -14,8 +14,6 @@ app = Flask(__name__)
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:JpEcVVcazObHteBNTKKcGuOAPjDJVjQU@postgres.railway.internal:5432/railway")  # Default for local dev
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 
-db = SQLAlchemy(app)
-
 
 
 # for using using SQLAlchemy (so can work on railway)
