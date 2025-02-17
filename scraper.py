@@ -21,7 +21,8 @@ def initialize_news_table():
                 CREATE TABLE IF NOT EXISTS news (
                     id SERIAL PRIMARY KEY,
                     title TEXT NOT NULL,
-                    link TEXT NOT NULL
+                    link TEXT NOT NULL,
+                    published TEXT NOT NULL
                 );
             '''))
             connection.commit()
@@ -56,8 +57,9 @@ def fetch_dog_news():
         for url in feed_urls:
             feed = feedparser.parse(url)
             for entry in feed.entries[:3]:  # Get top 3 articles
-                db.session.execute(text("INSERT INTO news (title, link) VALUES (:title, :link)"),
-                                  {"title": entry.title, "link": entry.link})
+                db.session.execute(text("INSERT INTO news (title, link, published) VALUES (:title, :link, :published)"),
+                   {"title": entry.title, "link": entry.link, "published": entry.published})
+
         db.session.commit()
         print("News updated!")
 
