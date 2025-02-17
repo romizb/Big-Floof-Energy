@@ -174,7 +174,7 @@ def home():
     with app.app_context():
         # Ensure fetch_dog_news() is executed
         fetch_dog_news()
-        dog_news = db.session.execute(text("SELECT title, link FROM news")).fetchall()
+        dog_news = db.session.execute(text("SELECT title, link FROM news ORDER BY id DESC LIMIT 3")).fetchall()
     
     # Convert fetched news into a list of dictionaries
     dog_news = [{"title": row[0], "link": row[1]} for row in dog_news] if dog_news else []
