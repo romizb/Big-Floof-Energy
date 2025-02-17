@@ -51,15 +51,12 @@ def initialize_news_table():
                 CREATE TABLE IF NOT EXISTS news (
                     id SERIAL PRIMARY KEY,
                     title TEXT NOT NULL,
-                    url TEXT NOT NULL,
-                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    link TEXT NOT NULL,
+                    published TEXT NOT NULL
                 );
             '''))
             connection.commit()
 
-# Ensure the table is created inside the application context
-with app.app_context():
-    initialize_news_table()
 
 # Create scheduler instance
 scheduler = BackgroundScheduler()
@@ -88,7 +85,12 @@ def fetch_dog_news():
 scheduler.add_job(fetch_dog_news, 'interval', hours=6)
 scheduler.start()
 
+
 if __name__ == "__main__":
     with app.app_context():
+        initialize_news_table()  # Ensure the table is properly structured
         db.create_all()
         fetch_dog_news()
+
+
+
