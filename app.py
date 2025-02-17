@@ -161,7 +161,14 @@ def home():
             "completed_by": task.completed_by
         }
 
-        grouped_tasks[task_date][task.task_type.split()[0]].append(task_data)
+        task_category = task.task_type.split()[0]
+
+        # Ensure all task categories exist in the dictionary
+        if task_category not in grouped_tasks[task_date]:
+            grouped_tasks[task_date][task_category] = []
+        
+        grouped_tasks[task_date][task_category].append(task_data)
+
 
     # Get latest dog news
     with app.app_context():
