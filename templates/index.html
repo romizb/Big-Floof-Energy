@@ -78,12 +78,13 @@
                 </div>
 
                 <!-- Custom Tasks Column (Only Show If There Are Custom Tasks) -->
+                <!-- Custom Tasks Column -->
                 {% if task_types["Custom"] %}
                 <div class="task-column custom-column">
                     <h3>✨ Custom Tasks</h3>
                     {% for task in task_types["Custom"] %}
                         <div class="task-card">
-                            <p>{{ task.task_type }}</p>
+                            <p>{{ task.task_type }}</p>  <!-- Ensure this displays the correct name -->
                             {% if task.completed %}
                                 ✅ Completed by {{ task.completed_by }}
                                 {% if task.notes %}
@@ -98,7 +99,6 @@
                                     <button type="submit">Mark as Done</button>
                                 </form>
                             {% endif %}
-
                         </div>
                     {% endfor %}
                 </div>
@@ -106,8 +106,7 @@
             </div>
         </div>
     {% endfor %}
-
-
+    
     <!-- Button to Download CSV -->
     <a href="{{ url_for('export_tasks') }}">
         <button>Export Task List as CSV</button>
