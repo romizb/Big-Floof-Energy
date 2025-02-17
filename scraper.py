@@ -2,11 +2,31 @@ from flask_sqlalchemy import SQLAlchemy
 import feedparser
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
+from app import db
+from sqlalchemy import text
 
 # Initialize Flask App (only if running as standalone)
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///bfe.db"
 db = SQLAlchemy(app)
+
+
+# for using using SQLAlchemy (so can work on railway)
+def initialize_news_table():
+    with db.engine.connect() as connection:
+        connection.execute(text('''
+            CREATE TABLE IF NOT EXISTS news (
+                id SERIAL PRIMARY KEY,
+                title TEXT NOT NULL,
+                url TEXT NOT NULL,
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        '''))
+        connection.commit()
+
+# Call this function before fetching news
+initialize_news_table()
+
 
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True)
