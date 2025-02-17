@@ -75,12 +75,17 @@ def fetch_dog_news():
         
 
 
-# Add the scheduled job (runs every 6 hours)
-scheduler.add_job(fetch_dog_news, 'interval', hours=6)
-scheduler.start()
+def start_scheduler():
+    if not scheduler.running:
+        scheduler.add_job(fetch_dog_news, 'interval', hours=6, id="news_scraper", replace_existing=True)
+        scheduler.start()
+        print("✅ Scheduler started!")
 
 if __name__ == "__main__":
     with app.app_context():
         initialize_news_table()
         db.create_all()
-        fetch_dog_news()
+        fetch_dog_news()  # Run once immediately
+        start_scheduler()  # Ensure the scheduler is running
+
+
