@@ -87,8 +87,12 @@ def login():
         if user:
             session['username'] = user.username
             return redirect(url_for('home'))
-        return render_template('login.html', error="Invalid username.")
+        
+        # Ensure error message is properly passed to the template
+        return render_template('login.html', error="Invalid username.")  
+
     return render_template('login.html')
+
 
 # -------------------------
 # MAIN ROUTE - TASK & NEWS DISPLAY
