@@ -3,6 +3,7 @@ import feedparser
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
 from sqlalchemy import text
+import os 
 
 # Initialize Flask App
 app = Flask(__name__)
