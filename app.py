@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 import os
 from datetime import datetime, timedelta
-from scraper import fetch_dog_news
 from sqlalchemy.sql.expression import func
 from apscheduler.schedulers.background import BackgroundScheduler
 
