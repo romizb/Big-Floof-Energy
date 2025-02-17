@@ -41,8 +41,8 @@ class News(db.Model):
 scheduler = BackgroundScheduler()
 
 def fetch_dog_news():
-    """ Scrape dog news and store it in the database """
-    initialize_news_table()  # Ensures table exists before inserting
+    """ Scrape dog news and store only 3 latest articles in the database """
+    initialize_news_table()  # Ensure table exists before inserting
 
     feed_urls = [
         "http://www.dogster.com/feed",
@@ -52,16 +52,27 @@ def fetch_dog_news():
         "https://www.avma.org/news/rss-feeds"
     ]
 
+    news_data = []
     with app.app_context():
-        db.session.execute(text("DELETE FROM news"))  # Clear old news
         for url in feed_urls:
             feed = feedparser.parse(url)
-            for entry in feed.entries[:3]:  # Get top 3 articles
-                db.session.execute(text("INSERT INTO news (title, link, published) VALUES (:title, :link, :published)"),
-                   {"title": entry.title, "link": entry.link, "published": entry.published})
+            for entry in feed.entries[:1]:  # Get only 1 article per site to ensure variety
+                news_data.append({
+                    "title": entry.title,
+                    "link": entry.link,
+                    "published": entry.published
+                })
 
+    # Keep only the latest 3 articles in the database
+    with app.app_context():
+        db.session.execute(text("DELETE FROM news"))  # Clear old news
+        for news in news_data[:3]:  # Store only 3 news articles total
+            db.session.execute(text("INSERT INTO news (title, link, published) VALUES (:title, :link, :published)"),
+                {"title": news["title"], "link": news["link"], "published": news["published"]})
         db.session.commit()
-        print("News updated!")
+    print("News updated!")
+
+        
 
 
 # Add the scheduled job (runs every 6 hours)
