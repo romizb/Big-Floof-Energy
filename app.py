@@ -248,7 +248,7 @@ def add_task():
     return redirect(url_for("home"))
 
 # -------------------------
-Start the Scheduler on Launch
+#Start the Scheduler on Launch
 # -------------------------
 with app.app_context():
     start_scheduler()
