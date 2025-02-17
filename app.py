@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from sqlalchemy.sql.expression import func
 from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy import text
+from scraper import start_scheduler
 
 
 
@@ -246,7 +247,11 @@ def add_task():
 
     return redirect(url_for("home"))
 
-
+# -------------------------
+Start the Scheduler on Launch
+# -------------------------
+with app.app_context():
+    start_scheduler()
 
 # -------------------------
 # START THE FLASK APP
