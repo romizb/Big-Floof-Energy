@@ -2,20 +2,21 @@ from flask import Flask, render_template, request, redirect, url_for, send_file,
 from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import jsonify
 from scraper import fetch_dog_news
 from sqlalchemy.sql.expression import func
+from apscheduler.schedulers.background import BackgroundScheduler
+
 
 # Initialize Flask App
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Required for user sessions
 
 # Database Configuration (SQLite Locally, PostgreSQL for Railway)
-if os.getenv("RAILWAY_ENV"):
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")  
-else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///bfe.db"  
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:JpEcVVcazObHteBNTKKcGuOAPjDJVjQU@postgres.railway.internal:5432/railway")  # Default for local dev
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+ 
 
 db = SQLAlchemy(app)
 
@@ -92,6 +93,33 @@ def login():
         return render_template('login.html', error="Invalid username.")  
 
     return render_template('login.html')
+
+# -------------------------
+#new tasks are automatically created every day
+#--------------------------
+def add_daily_tasks():
+    """ Ensure that the next day's tasks are preloaded. """
+    with app.app_context():
+        tomorrow = datetime.today().date() + timedelta(days=1)
+        existing_tasks = Task.query.filter_by(task_date=tomorrow).count()
+        
+        if existing_tasks == 0:  # Only add tasks if they don't exist
+            preloaded_tasks = [
+                Task(task_type="Walk (Morning)", task_date=tomorrow),
+                Task(task_type="Walk (Afternoon)", task_date=tomorrow),
+                Task(task_type="Walk (Evening)", task_date=tomorrow),
+                Task(task_type="Walk (Before Bed)", task_date=tomorrow),
+                Task(task_type="Feed (Morning)", task_date=tomorrow),
+                Task(task_type="Feed (Evening)", task_date=tomorrow)
+            ]
+            db.session.bulk_save_objects(preloaded_tasks)
+            db.session.commit()
+            print(f"Added tasks for {tomorrow}")
+
+# Run scheduler
+scheduler = BackgroundScheduler()
+scheduler.add_job(add_daily_tasks, 'cron', hour=0)  # Runs at midnight
+scheduler.start()
 
 
 # -------------------------
