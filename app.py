@@ -10,6 +10,9 @@ from apscheduler.schedulers.background import BackgroundScheduler
 # Initialize Flask app
 app = Flask(__name__)
 
+# ✅ Set SECRET_KEY to enable session functionality
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY", "your-default-secret-key")
+
 # Database Configuration
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:JpEcVVcazObHteBNTKKcGuOAPjDJVjQU@postgres.railway.internal:5432/railway")
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
