@@ -17,8 +17,9 @@ db = SQLAlchemy(app)
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
-    link = db.Column(db.String(512), nullable=False)
+    link = db.Column(db.String(512), nullable=False)  # Ensure "link" column exists
     published = db.Column(db.String(100), nullable=False)
+
 
 def initialize_news_table():
     with app.app_context():
