@@ -18,15 +18,14 @@ def initialize_news_table():
     with app.app_context():
         with db.engine.connect() as connection:
             connection.execute(text('''
-                DROP TABLE IF EXISTS news;
-                CREATE TABLE news (
+                CREATE TABLE IF NOT EXISTS news (
                     id SERIAL PRIMARY KEY,
                     title TEXT NOT NULL,
-                    link TEXT NOT NULL,
-                    published TEXT NOT NULL
+                    link TEXT NOT NULL
                 );
             '''))
             connection.commit()
+
 
 initialize_news_table()  # Ensures table exists before inserting news
 
@@ -42,6 +41,8 @@ scheduler = BackgroundScheduler()
 
 def fetch_dog_news():
     """ Scrape dog news and store it in the database """
+    initialize_news_table()  # Ensures table exists before inserting
+
     feed_urls = [
         "http://www.dogster.com/feed",
         "http://www.dogtipper.com/feed",
@@ -51,14 +52,15 @@ def fetch_dog_news():
     ]
 
     with app.app_context():
-        db.session.query(News).delete()  # Clear old news
+        db.session.execute(text("DELETE FROM news"))  # Clear old news
         for url in feed_urls:
             feed = feedparser.parse(url)
             for entry in feed.entries[:3]:  # Get top 3 articles
-                news_item = News(title=entry.title, link=entry.link, published=entry.published)
-                db.session.add(news_item)
+                db.session.execute(text("INSERT INTO news (title, link) VALUES (:title, :link)"),
+                                  {"title": entry.title, "link": entry.link})
         db.session.commit()
         print("News updated!")
+
 
 # Add the scheduled job (runs every 6 hours)
 scheduler.add_job(fetch_dog_news, 'interval', hours=6)
