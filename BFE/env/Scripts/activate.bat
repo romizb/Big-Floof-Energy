@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\rucha\bfe\env
+set VIRTUAL_ENV=C:\Users\rucha\work\repositories\big-floof-energy\bfe\env
 
 if not defined PROMPT set PROMPT=$P$G
 

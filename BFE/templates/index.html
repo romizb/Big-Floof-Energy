@@ -4,35 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Big Floof Energy</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 <body>
-    <h1>Dog Care Task List</h1>
+    <h1>Big Floof Energy</h1>
+    <h3>hey {{ username }} &#128150;</h3>
+    
 
-    <!-- Form to Add Tasks -->
-    <form action="/" method="POST">
-        <input type="text" name="task_name" placeholder="Enter a task (Walk, Feed, Water)" required>
+    <!-- Form to Add Custom Task -->
+    <form action="/add_task" method="POST">
+        <input type="text" name="task_name" placeholder="Enter a custom task" required>
+        <input type="date" name="task_date" required>
         <button type="submit">Add Task</button>
     </form>
 
-    <!-- Display Task List -->
-    <ul>
-        {% for task in tasks %}
-            <li>
-                {{ task.task_name }} 
-                {% if not task.completed %}
-                    <a href="{{ url_for('complete_task', task_id=task.id) }}">(Mark as Done)</a>
-                {% else %}
-                    ✅ Done
+    <!-- Debugging: Show grouped task data -->
+    <!-- <h2>Debugging: Task Data</h2> -->
+    <!-- <pre>{{ grouped_tasks | tojson(indent=2) }}</pre> -->
+
+    <!-- Display Tasks in a Calendar Format -->
+    {% for date, task_types in grouped_tasks.items() %}
+        <div class="day-container">
+            <h2>{{ date }}</h2>
+            <div class="task-columns">
+                <!-- Walk Tasks Column -->
+                <div class="task-column walk-column">
+                    <h3>🚶 Walk Tasks</h3>
+                    {% for task in task_types["Walk"] %}
+                        <div class="task-card">
+                            <p>{{ task.task_type }}</p>
+                            {% if task.completed %}
+                                ✅ Completed by {{ task.completed_by }}
+                                {% if task.notes %}
+                                    <p><strong>Note:</strong> {{ task.notes }}</p>
+                                {% endif %}
+                                <form action="{{ url_for('complete_task', task_id=task.id) }}" method="POST" style="display:inline;">
+                                    <button type="submit">Uncheck</button>
+                                </form>
+                            {% else %}
+                                <form action="{{ url_for('complete_task', task_id=task.id) }}" method="POST" style="display:inline;">
+                                    <input type="text" name="notes" placeholder="Add a note">
+                                    <button type="submit">Mark as Done</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Feed Tasks Column -->
+                <div class="task-column feed-column">
+                    <h3>🍖 Feed Tasks</h3>
+                    {% for task in task_types["Feed"] %}
+                        <div class="task-card">
+                            <p>{{ task.task_type }}</p>
+                            {% if task.completed %}
+                                ✅ Completed by {{ task.completed_by }}
+                                {% if task.notes %}
+                                    <p><strong>Note:</strong> {{ task.notes }}</p>
+                                {% endif %}
+                                <form action="{{ url_for('complete_task', task_id=task.id) }}" method="POST" style="display:inline;">
+                                    <button type="submit">Uncheck</button>
+                                </form>
+                            {% else %}
+                                <form action="{{ url_for('complete_task', task_id=task.id) }}" method="POST" style="display:inline;">
+                                    <input type="text" name="notes" placeholder="Add a note">
+                                    <button type="submit">Mark as Done</button>
+                                </form>
+                            {% endif %}
+
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Custom Tasks Column (Only Show If There Are Custom Tasks) -->
+                {% if task_types["Custom"] %}
+                <div class="task-column custom-column">
+                    <h3>✨ Custom Tasks</h3>
+                    {% for task in task_types["Custom"] %}
+                        <div class="task-card">
+                            <p>{{ task.task_type }}</p>
+                            {% if task.completed %}
+                                ✅ Completed by {{ task.completed_by }}
+                                {% if task.notes %}
+                                    <p><strong>Note:</strong> {{ task.notes }}</p>
+                                {% endif %}
+                                <form action="{{ url_for('complete_task', task_id=task.id) }}" method="POST" style="display:inline;">
+                                    <button type="submit">Uncheck</button>
+                                </form>
+                            {% else %}
+                                <form action="{{ url_for('complete_task', task_id=task.id) }}" method="POST" style="display:inline;">
+                                    <input type="text" name="notes" placeholder="Add a note">
+                                    <button type="submit">Mark as Done</button>
+                                </form>
+                            {% endif %}
+
+                        </div>
+                    {% endfor %}
+                </div>
                 {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+            </div>
+        </div>
+    {% endfor %}
+
 
     <!-- Button to Download CSV -->
-    <br>
     <a href="{{ url_for('export_tasks') }}">
         <button>Export Task List as CSV</button>
     </a>
 
 </body>
+
+
+<footer>
+    <p></p>
+</footer>
+
 </html>
+
+
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dog News</title>
+</head>
+<body>
+    <!-- 📰 Latest Dog News Section -->
+    <div class="news-section">
+        <h2>🚀 Pup-ular news 🐶</h2>
+        <div class="news-container">
+            {% for news in dog_news %}
+                <div class="news-card">
+                    <a href="{{ news.link }}" target="_blank">
+                        <h3 class="news-title">{{ news.title }}</h3>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>      
+</body>
+</html>
+
+
+

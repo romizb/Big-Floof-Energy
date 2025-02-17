@@ -1,0 +1,8 @@
+Task ID,Task Name,Task Date,Completed,Notes,Completed By
+1,Walk (Morning),2025-02-16,False,,
+2,Walk (Afternoon),2025-02-16,True,,tamar
+3,Walk (Evening),2025-02-16,True,,tamar
+4,Walk (Before Bed),2025-02-16,True,,tamar
+5,Feed (Morning),2025-02-16,False,,
+6,Feed (Evening),2025-02-16,True,,stranger
+7,vet appointment,2025-02-26,True,,romi

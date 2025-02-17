@@ -1,0 +1,433 @@
+/* 🌙 Soft Y2K Gothic Theme */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rubik+Glitch&family=Inter:wght@300;600&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to bottom, #1a1a1a, #0d0d0d);
+    color: #e6e6e6;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* 🖤 Header */
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    color: #ff66c4;
+    text-shadow: 1px 1px 8px rgba(255, 102, 196, 0.6);
+    font-size: 38px;
+    padding: 15px;
+    background: #222;
+    border-bottom: 2px solid #ff66c4;
+}
+
+/* 📅 Calendar Section */
+h2 {
+    background: linear-gradient(135deg, #292929, #111);
+    padding: 10px;
+    border-radius: 8px;
+    color: #ff66c4;
+    text-shadow: 1px 1px 6px rgba(255, 102, 196, 0.5);
+}
+
+/* 📋 Task List */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background: #252525;
+    margin: 8px auto;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 8px rgba(255, 255, 255, 0.1);
+    font-size: 18px;
+    max-width: 500px;
+}
+
+/* ✅ Completed Task Styling */
+.completed {
+    text-decoration: line-through;
+    color: #999;
+}
+
+/* 📝 Notes Styling */
+p {
+    font-style: italic;
+    color: #ffccff;
+    font-size: 14px;
+}
+
+/* 🎀 Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input, button {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ff66c4;
+    font-size: 16px;
+    background: #1e1e1e;
+    color: #e6e6e6;
+    text-align: center;
+    width: 85%;
+    max-width: 400px;
+}
+
+button {
+    background: linear-gradient(135deg, #ff66c4, #b3005b);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-weight: bold;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #b3005b, #ff66c4);
+    transform: scale(1.03);
+}
+
+/* 🌙 Softer Glow Effects */
+button, h1, h2 {
+    animation: softGlow 1.8s infinite alternate;
+}
+
+@keyframes softGlow {
+    from {
+        text-shadow: 0 0 8px rgba(255, 102, 196, 0.5);
+    }
+    to {
+        text-shadow: 0 0 14px rgba(255, 102, 196, 0.8);
+    }
+}
+
+/* 🖤🐺 chicken Cursor hehe */
+body {
+    cursor: url('https://cur.cursors-4u.net/nature/nat-2/nat116.cur'), auto;
+}
+
+
+
+/* 📱 Mobile Responsive Design */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 30px;
+    }
+
+    li {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+
+    form {
+        flex-direction: column;
+    }
+
+    input {
+        width: 95%;
+    }
+}
+
+
+
+/* 🎨 Walk Tasks */
+.walk-header {
+    color: #ffcc00;
+    text-shadow: 1px 1px 6px rgba(255, 204, 0, 0.8);
+}
+
+.walk-section {
+    background: rgba(255, 204, 0, 0.1);
+    border-left: 4px solid #ffcc00;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* 🍖 Feed Tasks */
+.feed-header {
+    color: #ff6666;
+    text-shadow: 1px 1px 6px rgba(255, 102, 102, 0.8);
+}
+
+.feed-section {
+    background: rgba(255, 102, 102, 0.1);
+    border-left: 4px solid #ff6666;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* ✨ Custom Tasks */
+.custom-header {
+    color: #66ccff;
+    text-shadow: 1px 1px 6px rgba(102, 204, 255, 0.8);
+}
+
+.custom-section {
+    background: rgba(102, 204, 255, 0.1);
+    border-left: 4px solid #66ccff;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+
+/* 🗂️ Task Layout */
+.day-container {
+    margin: 30px 0;
+    padding: 20px;
+    background: #222;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(255, 102, 196, 0.3);
+}
+
+.task-columns {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.task-column {
+    flex: 1;
+    min-width: 200px;
+    background: #333;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+/* Unique styles per type */
+.walk-column {
+    border-left: 5px solid #ff66c4;
+}
+
+.feed-column {
+    border-left: 5px solid #ffcc00;
+}
+
+.custom-column {
+    border-left: 5px solid #66ff99;
+}
+
+/* 📝 Task Cards */
+.task-card {
+    background: #0d0d0d;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    box-shadow: 1px 1px 6px rgba(255, 255, 255, 0.1);
+}
+
+.task-card p {
+    margin: 5px 0;
+    color: #ffccff;
+    font-size: 16px;
+}
+
+/* Buttons and Inputs */
+button {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, #ff66c4, #b3005b);
+    color: #fff;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+input {
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #ff66c4;
+    background: #222;
+    color: #fff;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    .task-columns {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .task-column {
+        width: 90%;
+    }
+}
+
+
+
+/* 📰 Dog News Section */
+.news-section {
+    background: #222;
+    padding: 20px;
+    margin: 30px auto;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(255, 102, 196, 0.3);
+    max-width: 900px;
+}
+
+.news-section h2 {
+    color: #ffcc00;
+    text-shadow: 1px 1px 8px rgba(255, 204, 0, 0.8);
+}
+
+/* 📖 News Cards */
+.news-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.news-card {
+    background: #333;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(255, 255, 255, 0.1);
+    text-align: center;
+    width: 30%;
+    min-width: 250px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.news-card:hover {
+    transform: scale(1.05);
+}
+
+.news-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.news-card h3 {
+    font-size: 16px;
+    color: #ff66c4;
+}
+
+.news-card a {
+    text-decoration: none;
+}
+
+.news-card a:hover h3 {
+    text-decoration: underline;
+}
+
+/* 🌟 Fun Y2K Dog News Section */
+.news-section {
+    background: linear-gradient(135deg, #ff66c4, #d40078);
+    padding: 25px;
+    margin: 30px auto;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px rgba(255, 102, 196, 0.5);
+    max-width: 800px;
+    text-align: center;
+    animation: glow 2s infinite alternate;
+}
+
+/* 🌟 Title Styling */
+.news-section h2 {
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 30px;
+    text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.9);
+}
+
+/* 📖 News Cards */
+.news-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.news-card {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px rgba(255, 255, 255, 0.4);
+    width: 30%;
+    min-width: 250px;
+    transition: transform 0.3s ease-in-out, background 0.5s ease;
+}
+
+/* ✨ Hover Effects */
+.news-card:hover {
+    transform: scale(1.08);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.news-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* 🖱️ Link Effects */
+.news-card a {
+    text-decoration: none;
+}
+
+.news-card a:hover .news-title {
+    color: #ffcc00;
+}
+
+/* ✨ Y2K Glow Animation */
+@keyframes glow {
+    from {
+        box-shadow: 0px 0px 10px rgba(255, 102, 196, 0.4);
+    }
+    to {
+        box-shadow: 0px 0px 20px rgba(255, 102, 196, 0.9);
+    }
+}
+
+/* 🛠 Mobile-Friendly */
+@media (max-width: 768px) {
+    .news-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .news-card {
+        width: 90%;
+    }
+}
+
+
+
+
+/* 🐾 Cute Dog Paw Print Footer */
+footer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #ffccff;
+}
+footer:after {
+    content: "🐾 Jasmine was here 🐾";
+    font-size: 16px;
+    display: block;
+    margin-top: 10px;
+}
+
+
+
+

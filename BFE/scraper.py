@@ -1,39 +1,55 @@
+import feedparser
 import requests
-from bs4 import BeautifulSoup
-
-def scrape_dog_food():
-    url = "https://hexomatic.com/academy/2023/10/16/top-30-most-scraped-websites-in-2023/#1-amazon-best-site-for-scraping-ecommerce-data"  # Replace with a real URL
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"}
+import random
+import time
 
 
-    response = requests.get(url, headers=headers)
-    if response.status_code != 200:
-        return ["Error: Unable to fetch data"]
+#to minimize slowdown of the program, scraping accurs every 30 min instead of every reload :)
+cached_news = None
+last_scraped_time = 0
 
-    soup = BeautifulSoup(response.text, 'html.parser')
+def fetch_dog_news():
+    global cached_news, last_scraped_time
 
-    deals = []
-    for item in soup.select('.product'):  # Adjust based on website structure
-        title = item.select_one('.title').text
-        price = item.select_one('.price').text
-        deals.append(f"{title} - {price}")
+    # Refresh news every 30 minutes (1800 seconds)
+    if cached_news and time.time() - last_scraped_time < 1800:
+        return cached_news  # Return cached data if recent
 
-    return deals
-#trail to find problem in code
-def scrape_dog_food():
-    url = "http://books.toscrape.com/"
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"}
-    response = requests.get(url, headers=headers)
+    print("Fetching fresh dog news...")  # Debugging
 
-    if response.status_code != 200:
-        return ["Error: Unable to fetch data"]
+    feed_urls = [
+        "http://www.dogster.com/feed",
+        "http://www.dogtipper.com/feed",
+        "http://www.companionanimalpsychology.com/feeds/posts/default?alt=rss",
+        "https://thedailycorgi.com/feed",
+        "https://www.avma.org/news/rss-feeds"
+    ]
 
-    soup = BeautifulSoup(response.text, 'html.parser')
+    news_items = []
 
-    deals = []
-    for item in soup.select('.product_pod'):
-        title = item.select_one('h3 a').text
-        price = item.select_one('.price_color').text
-        deals.append(f"{title} - {price}")
+    for url in feed_urls:
+        feed = feedparser.parse(url)
+        for entry in feed.entries[:3]:  # Get only the first 3 articles
+            
+            news_items.append({
+                'title': entry.title,
+                'link': entry.link,
+                'published': entry.published,
+                
+            })
 
-    return deals
+    # Sort news items by published date, most recent first
+    news_items.sort(key=lambda x: x['published'], reverse=True)
+    cached_news = news_items[:3]  # Store in cache
+    last_scraped_time = time.time()  # Update last scraped time
+
+    return cached_news
+
+
+
+
+
+
+
+
+
