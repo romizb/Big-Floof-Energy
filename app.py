@@ -220,7 +220,7 @@ def add_task():
         task_date = request.form.get("task_date")
         new_task = Task(
             task_type=task_name,  # This should store the actual user input, not "Custom"
-            task_date=task_due_date,
+            task_date=task_date,
             completed=False
         )
         db.session.add(new_task)
