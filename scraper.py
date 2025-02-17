@@ -5,7 +5,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 
-# Initialize Flask App (only if running as standalone)
+# Initialize Flask App
 app = Flask(__name__)
 
 # Database Configuration (SQLite Locally, PostgreSQL for Railway)
@@ -13,27 +13,29 @@ DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:JpEcVVcazObHteBN
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 db = SQLAlchemy(app)
 
-# Initialize news table (to avoid missing table issue)
-def initialize_news_table():
-    with db.engine.connect() as connection:
-        connection.execute(text('''
-            CREATE TABLE IF NOT EXISTS news (
-                id SERIAL PRIMARY KEY,
-                title TEXT NOT NULL,
-                url TEXT NOT NULL,
-                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );
-        '''))
-        connection.commit()
-
-initialize_news_table()
-
 # Define News model
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     link = db.Column(db.String(512), nullable=False)
     published = db.Column(db.String(100), nullable=False)
+
+def initialize_news_table():
+    with app.app_context():
+        with db.engine.connect() as connection:
+            connection.execute(text('''
+                CREATE TABLE IF NOT EXISTS news (
+                    id SERIAL PRIMARY KEY,
+                    title TEXT NOT NULL,
+                    url TEXT NOT NULL,
+                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            '''))
+            connection.commit()
+
+# Ensure the table is created inside the application context
+with app.app_context():
+    initialize_news_table()
 
 # Create scheduler instance
 scheduler = BackgroundScheduler()
@@ -65,4 +67,4 @@ scheduler.start()
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-    fetch_dog_news()
+        fetch_dog_news()
