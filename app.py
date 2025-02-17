@@ -1,24 +1,25 @@
-from flask import Flask, render_template, request, redirect, url_for, send_file, session
+from flask import Flask, render_template, request, redirect, url_for, send_file, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 import os
 from datetime import datetime, timedelta
-from flask import jsonify
 from scraper import fetch_dog_news
 from sqlalchemy.sql.expression import func
 from apscheduler.schedulers.background import BackgroundScheduler
 
-
-# Initialize Flask App
+# Initialize Flask app
 app = Flask(__name__)
-app.secret_key = "your_secret_key"  # Required for user sessions
 
-# Database Configuration (SQLite Locally, PostgreSQL for Railway)
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:JpEcVVcazObHteBNTKKcGuOAPjDJVjQU@postgres.railway.internal:5432/railway")  # Default for local dev
+# Database Configuration
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:JpEcVVcazObHteBNTKKcGuOAPjDJVjQU@postgres.railway.internal:5432/railway")
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
- 
 
+# Initialize Database
 db = SQLAlchemy(app)
+
+# Import fetch_dog_news AFTER initializing db
+from scraper import fetch_dog_news
+
 
 # -------------------------
 # DATABASE MODELS
