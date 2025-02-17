@@ -7,8 +7,15 @@ from sqlalchemy import text
 
 # Initialize Flask App (only if running as standalone)
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///bfe.db"
+#app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///bfe.db"
+#db = SQLAlchemy(app)
+
+# Database Configuration (SQLite Locally, PostgreSQL for Railway)
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:JpEcVVcazObHteBNTKKcGuOAPjDJVjQU@postgres.railway.internal:5432/railway")  # Default for local dev
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+
 db = SQLAlchemy(app)
+
 
 
 # for using using SQLAlchemy (so can work on railway)
