@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from sqlalchemy.sql.expression import func
 from apscheduler.schedulers.background import BackgroundScheduler
 
+
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -17,7 +18,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 db = SQLAlchemy(app)
 
 # Import fetch_dog_news AFTER initializing db
-from scraper import fetch_dog_news
+with app.app_context():
+    from scraper import fetch_dog_news
+
 
 
 # -------------------------
