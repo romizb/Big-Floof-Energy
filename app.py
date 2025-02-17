@@ -213,15 +213,20 @@ def export_tasks():
 # CUSTOM TASK CREATION
 # -------------------------
 
-@app.route('/add_task', methods=['POST'])
+@app.route("/add_task", methods=["POST"])
 def add_task():
-    """ Allows users to create custom tasks """
-    task_name = request.form['task_name']
-    task_date = request.form['task_date']  
-    if task_name and task_date:
-        db.session.add(Task(task_type="Custom", task_date=datetime.strptime(task_date, "%Y-%m-%d"), custom_task_name=task_name))
+    if request.method == "POST":
+        task_name = request.form.get("task_name")  # Ensure this captures user input
+        task_date = request.form.get("task_date")
+        new_task = Task(
+            task_type=task_name,  # This should store the actual user input, not "Custom"
+            date=task_date,
+            completed=False
+        )
+        db.session.add(new_task)
         db.session.commit()
-    return redirect(url_for('home'))
+    return redirect(url_for("home"))
+
 
 # -------------------------
 # START THE FLASK APP
