@@ -6,7 +6,7 @@
   "deploy": {
     "runtime": "V2",
     "numReplicas": 1,
-    "startCommand": "python BFE/app.py",
+    "startCommand": "python app.py",
     "sleepApplication": false,
     "multiRegionConfig": {
       "us-west2": {
