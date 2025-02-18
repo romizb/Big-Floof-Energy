@@ -93,6 +93,34 @@ def create_daily_tasks():
         db.session.add(Task(task_type=task_type, task_date=date))
 
     db.session.commit()
+# -------------------------
+#new tasks are automatically created every day
+#--------------------------
+def add_daily_tasks():
+    """ Ensure that the next day's tasks are preloaded. """
+    with app.app_context():
+        tomorrow = datetime.today().date() + timedelta(days=1)
+        existing_tasks = Task.query.filter_by(task_date=tomorrow).count()
+        
+        if existing_tasks == 0:  # Only add tasks if they don't exist
+            preloaded_tasks = [
+                Task(task_type="Walk (Morning)", task_date=tomorrow),
+                Task(task_type="Walk (Afternoon)", task_date=tomorrow),
+                Task(task_type="Walk (Evening)", task_date=tomorrow),
+                Task(task_type="Walk (Before Bed)", task_date=tomorrow),
+                Task(task_type="Feed (Morning)", task_date=tomorrow),
+                Task(task_type="Feed (Evening)", task_date=tomorrow)
+            ]
+            db.session.bulk_save_objects(preloaded_tasks)
+            db.session.commit()
+            print(f"Added tasks for {tomorrow}")
+
+# Run scheduler
+scheduler = BackgroundScheduler()
+scheduler.add_job(add_daily_tasks, 'cron', hour=0)  # Runs at midnight
+scheduler.start()
+
+#--------------------------
 
 with app.app_context():
     db.create_all()
@@ -120,32 +148,6 @@ def login():
 
     return render_template('login.html')
 
-# -------------------------
-#new tasks are automatically created every day
-#--------------------------
-def add_daily_tasks():
-    """ Ensure that the next day's tasks are preloaded. """
-    with app.app_context():
-        tomorrow = datetime.today().date() + timedelta(days=1)
-        existing_tasks = Task.query.filter_by(task_date=tomorrow).count()
-        
-        if existing_tasks == 0:  # Only add tasks if they don't exist
-            preloaded_tasks = [
-                Task(task_type="Walk (Morning)", task_date=tomorrow),
-                Task(task_type="Walk (Afternoon)", task_date=tomorrow),
-                Task(task_type="Walk (Evening)", task_date=tomorrow),
-                Task(task_type="Walk (Before Bed)", task_date=tomorrow),
-                Task(task_type="Feed (Morning)", task_date=tomorrow),
-                Task(task_type="Feed (Evening)", task_date=tomorrow)
-            ]
-            db.session.bulk_save_objects(preloaded_tasks)
-            db.session.commit()
-            print(f"Added tasks for {tomorrow}")
-
-# Run scheduler
-scheduler = BackgroundScheduler()
-scheduler.add_job(add_daily_tasks, 'cron', hour=0)  # Runs at midnight
-scheduler.start()
 
 
 # -------------------------
