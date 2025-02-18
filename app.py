@@ -60,10 +60,25 @@ def add_predefined_users():
     db.session.commit()
 
 def create_daily_tasks():
-    """ Ensures that predefined daily tasks exist """
+    """ Ensures that all predefined daily tasks exist for today """
     today = datetime.today().date()
-    if Task.query.filter_by(task_date=today).first():
-        return  # Avoid duplicates
+    
+    required_tasks = {"Walk (Morning)", "Walk (Afternoon)", "Walk (Evening)", "Walk (Before Bed)", "Feed (Morning)", "Feed (Evening)"}
+    
+    # Fetch existing task types for today
+    existing_tasks = {task.task_type for task in Task.query.filter_by(task_date=today).all()}
+    
+    # Find missing tasks
+    missing_tasks = required_tasks - existing_tasks
+    
+    # Add only missing tasks
+    for task_type in missing_tasks:
+        db.session.add(Task(task_type=task_type, task_date=today))
+
+    if missing_tasks:
+        db.session.commit()
+        print(f"Added missing tasks for {today}: {missing_tasks}")
+
 
     daily_tasks = [
         ("Walk (Morning)", today),
@@ -82,7 +97,9 @@ def create_daily_tasks():
 with app.app_context():
     db.create_all()
     add_predefined_users()
-    create_daily_tasks()
+    create_daily_tasks()  # Ensure today's tasks are fully loaded
+    add_daily_tasks()  # Ensure tomorrow’s tasks are also preloaded
+
 
 # -------------------------
 # USER AUTHENTICATION
