@@ -434,7 +434,7 @@ footer:after {
     position: absolute;
     top: 15px;
     right: 20px;
-    background: linear-gradient(135deg, #ff4444, #990000);
+    background: linear-gradient(135deg, #FF1493, #C71585);
     color: white;
     padding: 10px 15px;
     border-radius: 8px;
@@ -446,7 +446,7 @@ footer:after {
 }
 
 .logout-button:hover {
-    background: linear-gradient(135deg, #990000, #ff4444);
+    background: linear-gradient(135deg, #C71585, #FF1493);
     transform: scale(1.05);
 }
 
