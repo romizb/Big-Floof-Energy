@@ -116,6 +116,18 @@ def login():
 
 
 
+
+# -------------------------
+# Log out
+# -------------------------
+
+@app.route('/logout')
+def logout():
+    """Logs out the user by clearing the session and redirecting to login"""
+    session.pop('username', None)  # Remove username from session
+    return redirect(url_for('login'))
+
+
 # -------------------------
 # MAIN ROUTE - TASK & NEWS DISPLAY
 # -------------------------
