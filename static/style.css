@@ -428,6 +428,33 @@ footer:after {
     margin-top: 10px;
 }
 
+/* 🐾 Footer Styling */
+footer {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 16px;
+    color: #ffccff;
+    padding: 20px 0;
+    background: #111;
+    border-top: 2px solid #ff66c4;
+    width: 100%;
+}
+
+/* Ensure the footer sticks to the bottom */
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+}
+
 
 /* Log Out Button */
 .logout-button {
