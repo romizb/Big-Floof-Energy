@@ -7,6 +7,7 @@ from sqlalchemy.sql.expression import func
 from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy import text
 from scraper import start_scheduler
+from collections import OrderedDict
 
 
 
@@ -141,31 +142,28 @@ def home():
     username = session['username']
     
     # Retrieve tasks grouped by date
-    tasks = Task.query.all()
-    grouped_tasks = {}
-
+    tasks = Task.query.order_by(Task.task_date).all()
+    grouped_tasks = OrderedDict()
+    
     for task in tasks:
-        task_date = task.task_date.strftime('%A, %B %d, %Y')
-        if task_date not in grouped_tasks:
-            grouped_tasks[task_date] = {"Walk": [], "Feed": [], "Custom": []}
-        
+        task_date_key = task.task_date.strftime('%A, %B %d, %Y')  # Readable format
+        if task_date_key not in grouped_tasks:
+            grouped_tasks[task_date_key] = {"Walk": [], "Feed": [], "Custom": []}
+    
         task_data = {
             "id": task.id,
-            "task_type": task.custom_task_name if task.task_type == "Custom" else task.task_type,  # Show proper task name
+            "task_type": task.custom_task_name if task.task_type == "Custom" else task.task_type,
             "task_date": task.task_date.strftime('%Y-%m-%d'),
             "completed": task.completed,
             "notes": task.notes,
             "completed_by": task.completed_by
         }
-
-
-        task_category = task.task_type.split()[0]
-
-        # Ensure all task categories exist in the dictionary
-        if task_category not in grouped_tasks[task_date]:
-            grouped_tasks[task_date][task_category] = []
-        
-        grouped_tasks[task_date][task_category].append(task_data)
+    
+        task_category = task.task_type.split()[0]  # Identify category (Walk, Feed, Custom)
+        grouped_tasks[task_date_key][task_category].append(task_data)
+    
+    # Ensure dates are sorted before passing to the template
+    grouped_tasks = OrderedDict(sorted(grouped_tasks.items(), key=lambda x: datetime.strptime(x[0], '%A, %B %d, %Y')))
 
 
     # Get latest dog news
