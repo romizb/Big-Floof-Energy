@@ -59,61 +59,28 @@ def add_predefined_users():
             db.session.add(User(username=username))
     db.session.commit()
 
-def create_daily_tasks():
-    """ Ensures that all predefined daily tasks exist for today """
-    today = datetime.today().date()
-    
-    required_tasks = {"Walk (Morning)", "Walk (Afternoon)", "Walk (Evening)", "Walk (Before Bed)", "Feed (Morning)", "Feed (Evening)"}
-    
-    # Fetch existing task types for today
-    existing_tasks = {task.task_type for task in Task.query.filter_by(task_date=today).all()}
-    
-    # Find missing tasks
-    missing_tasks = required_tasks - existing_tasks
-    
-    # Add only missing tasks
-    for task_type in missing_tasks:
-        db.session.add(Task(task_type=task_type, task_date=today))
 
-    if missing_tasks:
-        db.session.commit()
-        print(f"Added missing tasks for {today}: {missing_tasks}")
-
-
-    daily_tasks = [
-        ("Walk (Morning)", today),
-        ("Walk (Afternoon)", today),
-        ("Walk (Evening)", today),
-        ("Walk (Before Bed)", today),
-        ("Feed (Morning)", today),
-        ("Feed (Evening)", today)
-    ]
-
-    for task_type, date in daily_tasks:
-        db.session.add(Task(task_type=task_type, task_date=date))
-
-    db.session.commit()
 # -------------------------
 #new tasks are automatically created every day
 #--------------------------
 def add_daily_tasks():
-    """ Ensure that the next day's tasks are preloaded. """
+    """ Ensure that the next day's tasks are preloaded without duplication. """
     with app.app_context():
         tomorrow = datetime.today().date() + timedelta(days=1)
-        existing_tasks = Task.query.filter_by(task_date=tomorrow).count()
+        required_tasks = {"Walk (Morning)", "Walk (Afternoon)", "Walk (Evening)", "Walk (Before Bed)", "Feed (Morning)", "Feed (Evening)"}
         
-        if existing_tasks == 0:  # Only add tasks if they don't exist
-            preloaded_tasks = [
-                Task(task_type="Walk (Morning)", task_date=tomorrow),
-                Task(task_type="Walk (Afternoon)", task_date=tomorrow),
-                Task(task_type="Walk (Evening)", task_date=tomorrow),
-                Task(task_type="Walk (Before Bed)", task_date=tomorrow),
-                Task(task_type="Feed (Morning)", task_date=tomorrow),
-                Task(task_type="Feed (Evening)", task_date=tomorrow)
-            ]
-            db.session.bulk_save_objects(preloaded_tasks)
+        # Fetch existing task types for tomorrow
+        existing_tasks = {task.task_type for task in Task.query.filter_by(task_date=tomorrow).all()}
+        
+        # Find missing tasks
+        missing_tasks = required_tasks - existing_tasks
+
+        if missing_tasks:  # Only add tasks if any are missing
+            for task_type in missing_tasks:
+                db.session.add(Task(task_type=task_type, task_date=tomorrow))
+            
             db.session.commit()
-            print(f"Added tasks for {tomorrow}")
+            print(f"Added missing tasks for {tomorrow}: {missing_tasks}")
 
 # Run scheduler
 scheduler = BackgroundScheduler()
@@ -125,7 +92,6 @@ scheduler.start()
 with app.app_context():
     db.create_all()
     add_predefined_users()
-    create_daily_tasks()  # Ensure today's tasks are fully loaded
     add_daily_tasks()  # Ensure tomorrow’s tasks are also preloaded
 
 
