@@ -429,5 +429,25 @@ footer:after {
 }
 
 
+/* Log Out Button */
+.logout-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: linear-gradient(135deg, #ff4444, #990000);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 2px 2px 8px rgba(255, 102, 102, 0.5);
+    transition: all 0.3s ease-in-out;
+}
+
+.logout-button:hover {
+    background: linear-gradient(135deg, #990000, #ff4444);
+    transform: scale(1.05);
+}
 
 
