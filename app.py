@@ -65,27 +65,35 @@ def add_predefined_users():
 #new tasks are automatically created every day
 #--------------------------
 def add_daily_tasks():
-    """ Ensure that the next day's tasks are preloaded without duplication. """
+    """ Ensure that both today's and tomorrow's tasks are preloaded without duplication. """
     with app.app_context():
-        tomorrow = datetime.today().date() + timedelta(days=1)
-        required_tasks = {"Walk (Morning)", "Walk (Afternoon)", "Walk (Evening)", "Walk (Before Bed)", "Feed (Morning)", "Feed (Evening)"}
+        today = datetime.today().date()
+        tomorrow = today + timedelta(days=1)
         
-        # Fetch existing task types for tomorrow
-        existing_tasks = {task.task_type for task in Task.query.filter_by(task_date=tomorrow).all()}
-        
-        # Find missing tasks
-        missing_tasks = required_tasks - existing_tasks
+        required_tasks = {
+            "Walk (Morning)", "Walk (Afternoon)", "Walk (Evening)", "Walk (Before Bed)",
+            "Feed (Morning)", "Feed (Evening)"
+        }
 
-        if missing_tasks:  # Only add tasks if any are missing
-            for task_type in missing_tasks:
-                db.session.add(Task(task_type=task_type, task_date=tomorrow))
-            
-            db.session.commit()
-            print(f"Added missing tasks for {tomorrow}: {missing_tasks}")
+        # Function to check and add missing tasks for a given date
+        def ensure_tasks_for_date(task_date):
+            existing_tasks = {task.task_type for task in Task.query.filter_by(task_date=task_date).all()}
+            missing_tasks = required_tasks - existing_tasks
+
+            if missing_tasks:
+                for task_type in missing_tasks:
+                    db.session.add(Task(task_type=task_type, task_date=task_date))
+                db.session.commit()
+                print(f"Added missing tasks for {task_date}: {missing_tasks}")
+
+        # Ensure tasks exist for both today and tomorrow
+        ensure_tasks_for_date(today)
+        ensure_tasks_for_date(tomorrow)
+
 
 # Run scheduler
 scheduler = BackgroundScheduler()
-scheduler.add_job(add_daily_tasks, 'cron', hour=0)  # Runs at midnight
+scheduler.add_job(add_daily_tasks, 'cron', minute=0)  # Runs every hour on the hour
 scheduler.start()
 
 #--------------------------
