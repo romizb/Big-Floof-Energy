@@ -68,7 +68,6 @@ def add_daily_tasks():
     """ Ensure that both today's and tomorrow's tasks are preloaded without duplication. """
     with app.app_context():
         today = datetime.today().date()
-        tomorrow = today + timedelta(days=1)
         
         required_tasks = {
             "Walk (Morning)", "Walk (Afternoon)", "Walk (Evening)", "Walk (Before Bed)",
@@ -86,9 +85,9 @@ def add_daily_tasks():
                 db.session.commit()
                 print(f"Added missing tasks for {task_date}: {missing_tasks}")
 
-        # Ensure tasks exist for both today and tomorrow
+        # Ensure tasks exist for today 
         ensure_tasks_for_date(today)
-        ensure_tasks_for_date(tomorrow)
+        
 
 
 # Run scheduler
