@@ -148,8 +148,32 @@ def home():
 
     username = session['username']
     
-    # Retrieve tasks grouped by date
-    tasks = Task.query.order_by(Task.task_date).all()
+    # Fetch all tasks grouped by date
+    all_tasks = Task.query.order_by(Task.task_date).all()
+    
+    # Filter out past days where ALL tasks are completed, so not to bombard the user
+    filtered_tasks = []
+    task_status_by_date = {}
+    
+    for task in all_tasks:
+        if task.task_date < datetime.today().date():  # Only consider past days
+            if task.task_date not in task_status_by_date:
+                task_status_by_date[task.task_date] = []
+    
+            task_status_by_date[task.task_date].append(task.completed)
+    
+        else:  
+            # Always include today's and future tasks
+            filtered_tasks.append(task)
+    
+    # remove fully completed past days
+    for date, statuses in task_status_by_date.items():
+        if not all(statuses):  # If ANY task is not completed, keep the date
+            filtered_tasks.extend([t for t in all_tasks if t.task_date == date])
+    
+    # Sort the filtered tasks by date
+    tasks = sorted(filtered_tasks, key=lambda t: t.task_date)
+
     grouped_tasks = OrderedDict()
     
     for task in tasks:
