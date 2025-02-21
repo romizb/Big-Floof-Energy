@@ -91,7 +91,7 @@ def add_daily_tasks():
 
 
         # Ensure tasks exist for today 
-        ensure_tasks_for_date(today)
+        #ensure_tasks_for_date(today)
         
 
 
@@ -105,7 +105,7 @@ scheduler.start()
 with app.app_context():
     db.create_all()
     add_predefined_users()
-    add_daily_tasks()  # Ensure tomorrow’s tasks are also preloaded
+    add_daily_tasks() 
 
 
 # -------------------------
