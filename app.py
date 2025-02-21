@@ -65,7 +65,7 @@ def add_predefined_users():
 #new tasks are automatically created every day
 #--------------------------
 def add_daily_tasks():
-    """ Ensure that both today's and tomorrow's tasks are preloaded without duplication. """
+    """ Ensure that today's tasks are preloaded without duplication. """
     with app.app_context():
         today = datetime.today().date()
         
@@ -74,16 +74,21 @@ def add_daily_tasks():
             "Feed (Morning)", "Feed (Evening)"
         }
 
-        # Function to check and add missing tasks for a given date
-        def ensure_tasks_for_date(task_date):
-            existing_tasks = {task.task_type for task in Task.query.filter_by(task_date=task_date).all()}
-            missing_tasks = required_tasks - existing_tasks
+        # Fetch all existing tasks for today, grouped by type
+        existing_tasks = {task.task_type for task in Task.query.filter(Task.task_date == today).all()}
 
-            if missing_tasks:
-                for task_type in missing_tasks:
-                    db.session.add(Task(task_type=task_type, task_date=task_date))
-                db.session.commit()
-                print(f"Added missing tasks for {task_date}: {missing_tasks}")
+        # Identify missing tasks
+        missing_tasks = required_tasks - existing_tasks
+
+        # Only add missing tasks to avoid duplication
+        if missing_tasks:
+            for task_type in missing_tasks:
+                db.session.add(Task(task_type=task_type, task_date=today))
+            db.session.commit()
+            print(f"[LOG] Added missing tasks for {today}: {missing_tasks}")
+        else:
+            print(f"[LOG] No new tasks needed for {today}, all tasks already exist.")
+
 
         # Ensure tasks exist for today 
         ensure_tasks_for_date(today)
@@ -92,7 +97,7 @@ def add_daily_tasks():
 
 # Run scheduler
 scheduler = BackgroundScheduler()
-scheduler.add_job(add_daily_tasks, 'cron', minute=0)  # Runs every hour on the hour
+scheduler.add_job(add_daily_tasks, 'cron', hour=0, minute=5)  # Runs once per day at 12:05 AM
 scheduler.start()
 
 #--------------------------
