@@ -478,11 +478,11 @@ footer {
 
 /* 🛠 Mobile Responsive - Move Logout Below Title */
 @media (max-width: 768px) {
-    .logout-container {
-        position: relative;  /* Remove absolute positioning */
-        display: flex;
-        justify-content: center;
+    .logout-button {
         margin-top: 10px;
+        display: block;
+        width: 90%;
+        text-align: center;
     }
 
     .logout-button {
@@ -493,6 +493,10 @@ footer {
 }
 
 
+.logout-button:hover {
+    background: linear-gradient(135deg, #C71585, #FF1493);
+    transform: scale(1.05);
+}
 
 
 
