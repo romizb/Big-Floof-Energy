@@ -458,19 +458,32 @@ footer {
 
 /* Log Out Button */
 .logout-button {
-    position: absolute;
-    top: 15px;
-    right: 20px;
+    display: block;
+    position: relative; /* Remove absolute positioning */
+    margin: 10px auto; /* Center it horizontally */
+    width: fit-content;
     background: linear-gradient(135deg, #FF1493, #C71585);
     color: white;
-    padding: 10px 15px;
-    border-radius: 8px;
+    padding: 12px 18px;
+    border-radius: 10px;
     text-decoration: none;
     font-weight: bold;
     font-size: 14px;
     box-shadow: 2px 2px 8px rgba(255, 102, 102, 0.5);
     transition: all 0.3s ease-in-out;
+    text-align: center;
 }
+
+/* Adjust logout button on smaller screens */
+@media (max-width: 768px) {
+    .logout-button {
+        margin-top: 10px;
+        display: block;
+        width: 90%;
+        text-align: center;
+    }
+}
+
 
 .logout-button:hover {
     background: linear-gradient(135deg, #C71585, #FF1493);
