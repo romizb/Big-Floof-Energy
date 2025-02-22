@@ -475,21 +475,26 @@ footer {
     transition: all 0.3s ease-in-out;
     text-align: center;
 }
-
-/* 🛠 Mobile Responsive - Logout Below Title */
 @media (max-width: 768px) {
     .logout-container {
-        position: relative;  /* Remove absolute positioning */
+        position: relative;  
         display: flex;
         justify-content: center;
+        align-items: center; /* Ensures proper centering */
+        width: 100%;
         margin-top: 10px;
     }
 
     .logout-button {
         display: block;
-        width: 90%;
+        width: 80%;  /* Adjust width for better centering */
+        max-width: 300px; /* Prevents it from being too wide */
         text-align: center;
+        padding: 12px;
+        border-radius: 10px;
     }
+}
+
 
 
 .logout-button:hover {
