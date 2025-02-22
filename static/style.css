@@ -456,12 +456,14 @@ footer {
 }
 
 
-/* Log Out Button */
+/* Default - Desktop Version (Logout button in top-right) */
+.logout-container {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
 .logout-button {
-    display: block;
-    position: relative; /* Remove absolute positioning */
-    margin: 10px auto; /* Center it horizontally */
-    width: fit-content;
     background: linear-gradient(135deg, #FF1493, #C71585);
     color: white;
     padding: 12px 18px;
@@ -474,10 +476,16 @@ footer {
     text-align: center;
 }
 
-/* Adjust logout button on smaller screens */
+/* 🛠 Mobile Responsive - Move Logout Below Title */
 @media (max-width: 768px) {
-    .logout-button {
+    .logout-container {
+        position: relative;  /* Remove absolute positioning */
+        display: flex;
+        justify-content: center;
         margin-top: 10px;
+    }
+
+    .logout-button {
         display: block;
         width: 90%;
         text-align: center;
@@ -485,15 +493,7 @@ footer {
 }
 
 
-.logout-button:hover {
-    background: linear-gradient(135deg, #C71585, #FF1493);
-    transform: scale(1.05);
-}
 
-.logout-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-}
+
 
 
