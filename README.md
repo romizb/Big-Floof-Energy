@@ -1,66 +1,105 @@
-# Big Floof Energy (BFE) 
+# 🌟🐾 Big Floof Energy 🐾🌟  
+### **The Ultimate Dog Care Manager for Roommates**  
 ![Banner Image Placeholder](https://github.com/romizb/Big-Floof-Energy/blob/main/jasmine%20banner.jpg)
-## Objective summary
 
-The aim of this project is to create a python based, user-friendly, web application to streamline dog care and management among roommates. This application will allow roommates to collaboratively organize tasks such as walking, feeding, and providing water for the dog. The program will also integrate web scraping features to track discounts on dog food from various e-commerce websites, as well as be able to supply weekly reports as CSV files containing data on completed tasks and spending on dog food. 
-
----
-## How to install
-
-The project will upload as a web-based platform accessible from any device with an internet connection. Therefore, no software installation required for users. However, a login profile will be needed.
+<sub>_*🖥️✨ **A next-gen Flask web app that keeps your pup’s care on lock—because only the most elite floofs deserve VIP treatment!** 🐕💿🔥*_</sub>
 
 ---
-## How to run test for project
 
-The body of the project will be written in python, therefor the test will be as a module in VSCode.
+## 🚀 About Big Floof Energy  
 
----
-## How to supply data
-
-Data will be supplied by the users through the web based platform. Data will then be stored in SQLite (to lesser metadata), and data summaries in CVS files. 
-
----
-## Workflow
-1.	**Requirements Analysis and Design**
--	Define user requirements and design the layout.
--	Outline the database schema and application architecture.
-2.	**Core Functionality Development** <img align="right" width="235" height="300" src="https://github.com/user-attachments/assets/d47b655c-9538-4e50-ba98-53faee59a488">
--	Implement user authentication and profile management.
--	Implement task logging, calendar features and availability planner features.
-3.	**Web Scraping Module**
--	Build web scraping scripts to monitor dog food discounts.
--	Store scraped data in the database and implement notification logic.
-4.	**Testing and Debugging**
--	Test modules in VSCode.
--	Let friend run the code, debug and optimize the code for performance.
--	Add FAQ to README repository of the project on GitHub.
-5.	**Deployment**
--	Prepare the final application for standalone use.
--	Deploy the application online.
-
----
-## Technical Stack
-1.	**Core Language:** for implementing all functionality.
--	Python 
-2.	**Backend Features:** to handle task logging, data storage, and web scraping.
--	Python 
-3.	**Frontend Features:** for building a responsive and attractive user interface.
--	Python (GUI), HTML, CSS, and JavaScript 
-4.	**Database:** for storing user data, task logs, and scraped information.
--	SQLite 
--	CSV files as additional storage options for portability.
-5.	**Web Scraping:** to scrape e-commerce websites.
--	Libraries and Requests 
-6.	**Hosting:** to deploy the platform for free online
--	Free (limited plan) platforms (like Heroku, AWS, or PythonAnywhere)
+Big Floof Energy (BFE) is a **task manager designed for roommates** to easily **track and coordinate dog care duties**. From **daily walks and feedings** to **custom tasks**, the app ensures everyone stays accountable while keeping your furry friend happy.  
 
 
 ---
-> 📝: **NOTE**- This is the project **proposal**. Project details, functions, and platform use might alter whilst code writing progresses.
+
+## 🎀 How It Works  
+
+1. **Start the App**  
+   - enter ![BFE\login](https://big-floof-energy-production-6650.up.railway.app/login)
+
+2. **Log In**  
+   - Only predefined users can access the program (defined in app.py: "def add_predefined_users()").  
+   - Usernames are case-insensitive for convenience.
+   - For outside users, input the username "**stranger**" :).
+   - Implementing a username-based-access helps the program assign task completion to spesific users, as well as increasing privacy of the app.
+    
+
+3. **Manage Tasks**  
+   - See a **weekly calendar** with preloaded dog care tasks.  
+   - Tasks are grouped into:  
+     - 🐕 **Walks** (morning, afternoon, evening, bedtime)  
+     - 🍖 **Feedings** (twice daily)  
+     - ✍️ **Custom Tasks** (user-added)  
+   - Click to **mark/unmark tasks as complete**.  
+   - **Leave notes** on completed tasks.
+   - for increased visual convenience, previous dates that have all tasks complete are hidden from the user, whilst their data is kept in the system.
+
+4. **View & Export Data**  
+   - Tasks are logged with **timestamps & usernames**.  
+   - Export **task records as a CSV file** for tracking.
+   - All tasks, including thoes checked from previous days, are presented in the CSV file.
+
+5. **Stay Updated on Dog News & Deals**  
+   - A **web scraper** that fetches funny latest dog-related news.   
+
+---
+
+## 🖥️ Testing the program 
+
+### 🛠️ Testing functionalities 
+  - Ensure users and tasks are correctly stored and retrieved.
+  - Verify task completion toggling.
+  - Confirm login works only for predefined users.
+  - Check if tasks are created daily.
+  - Validate adding custom tasks.
+  - Ensure it returns valid dog news data.
+
+### 📌 Requirements  
+Make sure you have:  
+- **Python** (3.x recommended)  
+- **Flask** (`pip install flask`)  
+- **All requirements** (`pip install requirements.txt`)  
+- **SQLite** (comes with Python)
+
+### ▶️ Testing the BFE code  
+1. Download (or "pull" via Git Bash) all files in the Big-Floof-Energy repository to your computer.
+2. In terminal, open a virtual environment (I use VSCode in WINDOWS, therefor these sample codes are fitted for such synthax):
+```bash
+env\Scripts\activate
+```
+3. Since app.py and scraper.py rely on environment variables to connect to the database, we need to temporarily override DATABASE_URL only while running tests:
+```bash (WINDOWS)
+$env:DATABASE_URL="sqlite:///:memory:"
+```
+4. Now test the program:
+```bash
+python -m unittest test_app.py
+```
+5. In your teminal you should get something like this:
 
 
-![Footer Placeholder](https://github.com/romizb/Big-Floof-Energy/blob/main/happy%20coding%20banner.png)
+The “OK” at the end means all test ran successfully and the functions of the Big-floof-energy functions are successfully running and bug free.
 
 
+---
+### 🌟 Lil' Bonus Perks 🌟  
 
-<sub>_This program was written during my MS.c program in [Weizmann Institute](https://www.weizmann.ac.il/pages/), as part of a [python course](https://github.com/szabgab/wis-python-course-2024-11), tought by [Gabor Sabo](https://szabgab.com/)._</sub>
+- BFE is designed with mobile users in mind, so you can keep your floofies schedule tight from anywhere.  
+- News scraping runs every 6 hours to incease the program's loading speed.  
+- Keep your eyes peeled for some **top-secret** doggy Easter eggs... 🐶🦴🐔💿 Can you find them all? 👀✨
+
+
+---
+## Future Enhancements  
+The work doesn’t stop here! Planned future improvements include:  
+
+- **Enhancing the dog-friendly experience** with more visuals, interactive elements, and hidden Easter eggs.  
+- **Multilingual support**, starting with Hebrew, to make the app accessible to a broader user base.  
+- **Strengthening security** by encrypting sensitive keys within the code and integrating additional protective measures such as DDoS prevention and Firebase authentication.  
+
+Stay tuned for updates! 📡✨
+
+---
+*This program was written during my MS.c program in [Weizmann Institute](https://www.weizmann.ac.il/pages/), as part of a [python course](https://github.com/szabgab/wis-python-course-2024-11), tought by [Gabor Sabo](https://szabgab.com/) and toutered by [Liron Hoffman](https://liroh99.github.io/) and [Hadar Klimovski](https://hadarklimovski.github.io/).*
+
