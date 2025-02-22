@@ -490,4 +490,10 @@ footer {
     transform: scale(1.05);
 }
 
+.logout-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
 
