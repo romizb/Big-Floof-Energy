@@ -65,7 +65,7 @@ def add_predefined_users():
 #new tasks are automatically created every day
 #--------------------------
 def add_daily_tasks():
-    """ Ensure that today's tasks are preloaded without duplication. """
+    """ Ensure today's tasks are preloaded without duplication. """
     with app.app_context():
         today = datetime.today().date()
         
@@ -74,20 +74,23 @@ def add_daily_tasks():
             "Feed (Morning)", "Feed (Evening)"
         }
 
-        # Fetch all existing tasks for today, grouped by type
-        existing_tasks = {task.task_type for task in Task.query.filter(Task.task_date == today).all()}
+        # Fetch all existing tasks for today, checking both task type and date
+        existing_tasks = {
+            (task.task_type, task.task_date) for task in Task.query.filter(Task.task_date == today).all()
+        }
 
         # Identify missing tasks
-        missing_tasks = required_tasks - existing_tasks
+        missing_tasks = [(task_type, today) for task_type in required_tasks if (task_type, today) not in existing_tasks]
 
         # Only add missing tasks to avoid duplication
         if missing_tasks:
-            for task_type in missing_tasks:
-                db.session.add(Task(task_type=task_type, task_date=today))
+            for task_type, task_date in missing_tasks:
+                db.session.add(Task(task_type=task_type, task_date=task_date))
             db.session.commit()
-            print(f"[LOG] Added missing tasks for {today}: {missing_tasks}")
+            print(f"[LOG] Added missing tasks for {today}: {len(missing_tasks)} tasks")
         else:
             print(f"[LOG] No new tasks needed for {today}, all tasks already exist.")
+
 
 
         # Ensure tasks exist for today 
@@ -105,7 +108,7 @@ scheduler.start()
 with app.app_context():
     db.create_all()
     add_predefined_users()
-    add_daily_tasks() 
+    
 
 
 # -------------------------
