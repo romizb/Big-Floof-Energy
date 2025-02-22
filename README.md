@@ -16,7 +16,8 @@ Big Floof Energy (BFE) is a **task manager designed for roommates** to easily **
 ## 🎀 How It Works  
 
 1. **Start the App**  
-   - Enter ![BFE\login](big-floof-energy-production-6650.up.railway.app)
+   - Enter BFE\login via https://big-floof-energy-production-6650.up.railway.app/login
+
 
 2. **Log In**  
    - Only predefined users can access the program (defined in app.py: "def add_predefined_users()").  
