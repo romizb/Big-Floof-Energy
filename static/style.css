@@ -479,21 +479,25 @@ footer {
     .logout-container {
         position: relative;  
         display: flex;
-        justify-content: center;
-        align-items: center; /* Ensures proper centering */
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
         width: 100%;
         margin-top: 10px;
+        text-align: center;
     }
 
     .logout-button {
-        display: block;
-        width: 80%;  /* Adjust width for better centering */
-        max-width: 300px; /* Prevents it from being too wide */
+        display: flex; /* Allows centering inside itself */
+        justify-content: center; /* Centers text/icon */
+        align-items: center; /* Centers vertically */
+        width: 90%; /* Adjust width for better fit */
+        max-width: 320px; /* Prevents it from being too wide */
         text-align: center;
         padding: 12px;
         border-radius: 10px;
     }
 }
+
 
 
 
