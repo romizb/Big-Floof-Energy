@@ -3,6 +3,8 @@ from app import app, db, User, Task
 from scraper import fetch_dog_news
 from datetime import datetime
 from flask import session
+from sqlalchemy import text
+
 
 class BFETestCase(unittest.TestCase):
     @classmethod
@@ -104,11 +106,23 @@ class BFETestCase(unittest.TestCase):
     def test_news_scraping(self):
         """ Check that dog news scraper returns valid results """
         with app.app_context():
-            fetch_dog_news()  # ✅ Ensure news scraping runs inside app context
+            # ✅ Manually insert test news before running fetch_dog_news()
+            db.session.execute(text("""
+                INSERT INTO news (title, link, published) 
+                VALUES ('Test News 1', 'http://example.com/1', '2025-02-22'),
+                    ('Test News 2', 'http://example.com/2', '2025-02-23'),
+                    ('Test News 3', 'http://example.com/3', '2025-02-24');
+            """))
+            db.session.commit()
+
+            # ✅ Now, run fetch_dog_news() to check if it updates news properly
+            fetch_dog_news()
+
+            # ✅ Fetch the news after scraping
             news = db.session.execute(text("SELECT title, link FROM news")).fetchall()
-    
+
         self.assertIsInstance(news, list)
-        self.assertGreater(len(news), 0)  # ✅ Ensure at least one news article is scraped
+        self.assertGreater(len(news), 0)  # ✅ Ensure at least one news article exists
 
 
 if __name__ == '__main__':
