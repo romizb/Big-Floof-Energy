@@ -5,32 +5,32 @@ from datetime import datetime
 from flask import session
 
 class BFETestCase(unittest.TestCase):
-@classmethod
-def setUpClass(cls):
-    """ Runs once before all tests. Initializes test app. """
-    app.config['TESTING'] = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///:memory:"  # Use in-memory DB
-    cls.client = app.test_client()
+    @classmethod
+    def setUpClass(cls):
+        """ Runs once before all tests. Initializes test app. """
+        app.config['TESTING'] = True
+        app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///:memory:"  # Use in-memory DB
+        cls.client = app.test_client()
+        
+        with app.app_context():
+            db.create_all()  # ✅ Ensure all tables (including `news`) are created
+            cls.add_test_users()
+            cls.create_test_tasks()
+            cls.create_news_table()  # ✅ Manually create the `news` table for tests
     
-    with app.app_context():
-        db.create_all()  # ✅ Ensure all tables (including `news`) are created
-        cls.add_test_users()
-        cls.create_test_tasks()
-        cls.create_news_table()  # ✅ Manually create the `news` table for tests
-
-@classmethod
-def create_news_table(cls):
-    """ Ensure the news table exists in the test database. """
-    with app.app_context():
-        db.session.execute(text('''
-            CREATE TABLE IF NOT EXISTS news (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                title TEXT NOT NULL,
-                link TEXT NOT NULL,
-                published TEXT NOT NULL
-            );
-        '''))
-        db.session.commit()
+    @classmethod
+    def create_news_table(cls):
+        """ Ensure the news table exists in the test database. """
+        with app.app_context():
+            db.session.execute(text('''
+                CREATE TABLE IF NOT EXISTS news (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    title TEXT NOT NULL,
+                    link TEXT NOT NULL,
+                    published TEXT NOT NULL
+                );
+            '''))
+            db.session.commit()
 
 
     @classmethod
