@@ -79,7 +79,7 @@ python -m unittest test_app.py
 ```
 5. In your teminal you should get something like this:
 
-![](https://github.com/romizb/Big-Floof-Energy/blob/main/old%20test%20result.png)
+![](https://github.com/romizb/Big-Floof-Energy/blob/main/Screenshot%202025-02-23%20162334.png)
 
 The “OK” at the end means all tests ran successfully and the functions in the Big-floof-energy are successfully running, bug free.
 
