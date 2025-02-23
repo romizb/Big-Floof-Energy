@@ -27,7 +27,7 @@ Big Floof Energy (BFE) is a **task manager designed for roommates** to easily **
     
 
 3. **Manage Tasks**  
-   - See a **weekly calendar** with preloaded dog care tasks.  
+   - See a **daily calendar** with preloaded dog care tasks.  
    - Tasks are grouped into:  
      - 🐕 **Walks** (morning, afternoon, evening, bedtime)  
      - 🍖 **Feedings** (twice daily)  
@@ -49,12 +49,12 @@ Big Floof Energy (BFE) is a **task manager designed for roommates** to easily **
 ## 🖥️ Testing the program 
 
 ### 🛠️ Testing functionalities 
-  - Ensure users and tasks are correctly stored and retrieved.
-  - Verify task completion toggling.
-  - Confirm login works only for predefined users.
-  - Check if tasks are created daily.
-  - Validate adding custom tasks.
-  - Ensure it returns valid dog news data.
+  - Ensures users and tasks are correctly stored and retrieved.
+  - Verifies task completion toggling.
+  - Confirms login works only for predefined users.
+  - Checks if tasks are created daily.
+  - Validates adding custom tasks.
+  - Ensures it returns valid dog news data.
 
 ### 📌 Requirements  
 Make sure you have:  
@@ -79,7 +79,7 @@ python -m unittest test_app.py
 ```
 5. In your teminal you should get something like this:
 
-![](https://github.com/romizb/Big-Floof-Energy/blob/main/image.png)
+![]()
 
 The “OK” at the end means all tests ran successfully and the functions in the Big-floof-energy are successfully running, bug free.
 
