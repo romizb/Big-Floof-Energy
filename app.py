@@ -8,7 +8,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy import text
 from scraper import start_scheduler
 from collections import OrderedDict
-
+from sqlalchemy.exc import IntegrityError
 
 
 # Initialize Flask app
@@ -65,7 +65,7 @@ def add_predefined_users():
 #new tasks are automatically created every day
 #--------------------------
 def add_daily_tasks():
-    """ Ensure today's tasks are preloaded without duplication. """
+    """ Ensure that today's tasks are preloaded without duplication. """
     with app.app_context():
         today = datetime.today().date()
         
@@ -74,22 +74,31 @@ def add_daily_tasks():
             "Feed (Morning)", "Feed (Evening)"
         }
 
-        # Fetch all existing tasks for today, checking both task type and date
-        existing_tasks = {
-            (task.task_type, task.task_date) for task in Task.query.filter(Task.task_date == today).all()
-        }
+        try:
+            # Locking mechanism: Ensure only one process runs this function at a time
+            db.session.execute(text("LOCK TABLE task IN ACCESS EXCLUSIVE MODE"))
 
-        # Identify missing tasks
-        missing_tasks = [(task_type, today) for task_type in required_tasks if (task_type, today) not in existing_tasks]
+            # Fetch all existing tasks for today
+            existing_tasks = {
+                task.task_type for task in Task.query.filter(Task.task_date == today).all()
+            }
 
-        # Only add missing tasks to avoid duplication
-        if missing_tasks:
-            for task_type, task_date in missing_tasks:
-                db.session.add(Task(task_type=task_type, task_date=task_date))
-            db.session.commit()
-            print(f"[LOG] Added missing tasks for {today}: {len(missing_tasks)} tasks")
-        else:
-            print(f"[LOG] No new tasks needed for {today}, all tasks already exist.")
+            # Identify missing tasks
+            missing_tasks = required_tasks - existing_tasks
+
+            # Add only missing tasks
+            if missing_tasks:
+                for task_type in missing_tasks:
+                    db.session.add(Task(task_type=task_type, task_date=today))
+                db.session.commit()
+                print(f"[LOG] Added missing tasks for {today}: {len(missing_tasks)} tasks")
+            else:
+                print(f"[LOG] No new tasks needed for {today}, all tasks already exist.")
+
+        except IntegrityError:
+            db.session.rollback()
+            print("[ERROR] Task creation conflict detected. Skipping duplicate task addition.")
+
 
 
 
