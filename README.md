@@ -8,7 +8,7 @@
 
 ## 🚀 About Big Floof Energy  
 
-Big Floof Energy (BFE) is a **task manager designed for roommates** to easily **track and coordinate dog care duties**. From **daily walks and feedings** to **custom tasks**, the app ensures everyone stays accountable while keeping your furry friend happy.  
+Big Floof Energy (BFE) is a **task manager designed for roommates** to easily **track and coordinate dog care duties**. From **daily walks and feedings** to **custom tasks** and **web scraping**, the app ensures everyone stays accountable while keeping your furry friend happy.  
 
 
 ---
@@ -65,11 +65,11 @@ Make sure you have:
 
 ### ▶️ Testing the BFE code  
 1. Download (or "pull" via Git Bash) all files in the Big-Floof-Energy repository to your computer.
-2. In terminal, open a virtual environment (I use VSCode in WINDOWS, therefor these sample codes are fitted for such synthax):
+2. In the terminal, open a virtual environment (I use VSCode in WINDOWS, therefor these sample codes are fitted for such synthax):
 ```bash
 env\Scripts\activate
 ```
-3. Since app.py and scraper.py rely on environment variables to connect to the database, we need to temporarily override DATABASE_URL only while running tests:
+3. Since app.py and scraper.py rely on environment variables to connect to the database, you need to temporarily override DATABASE_URL only while running tests:
 ```bash (WINDOWS)
 $env:DATABASE_URL="sqlite:///:memory:"
 ```
@@ -81,7 +81,7 @@ python -m unittest test_app.py
 
 ![](https://github.com/romizb/Big-Floof-Energy/blob/main/image.png)
 
-The “OK” at the end means all test ran successfully and the functions of the Big-floof-energy functions are successfully running and bug free.
+The “OK” at the end means all tests ran successfully and the functions in the Big-floof-energy are successfully running, bug free.
 
 
 ---
@@ -98,7 +98,8 @@ The work doesn’t stop here! Planned future improvements include:
 
 - **Enhancing the dog-friendly experience** with more visuals, interactive elements, and hidden Easter eggs.  
 - **Multilingual support**, starting with Hebrew, to make the app accessible to a broader user base.  
-- **Strengthening security** by encrypting sensitive keys within the code and integrating additional protective measures such as DDoS prevention and Firebase authentication.  
+- **Strengthening security** by encrypting sensitive keys within the code and integrating additional protective measures such as DDoS prevention and Firebase authentication.
+- **Ongoing Debugging:** BFE is currently under active development, with a known issue causing the daily task generator to duplicate entries. A fix is in progress and is expected to be implemented within the next few days :)
 
 Stay tuned for updates! 📡✨
 
