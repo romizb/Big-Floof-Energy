@@ -1,6 +1,6 @@
 # 🌟🐾 Big Floof Energy 🐾🌟  
 ### **The Ultimate Dog Care Manager for Roommates**  
-![Banner Image Placeholder](https://github.com/romizb/Big-Floof-Energy/blob/main/jasmine%20banner.jpg)
+![Banner Image Placeholder]()
 
 <sub>_*🖥️✨ **A next-gen Flask web app that keeps your pup’s care on lock—because only the most elite floofs deserve VIP treatment!** 🐕💿🔥*_</sub>
 
@@ -79,7 +79,7 @@ python -m unittest test_app.py
 ```
 5. In your teminal you should get something like this:
 
-![]()
+![](https://github.com/romizb/Big-Floof-Energy/blob/main/testing%20result.png)
 
 The “OK” at the end means all tests ran successfully and the functions in the Big-floof-energy are successfully running, bug free.
 
