@@ -99,7 +99,7 @@ The work doesn’t stop here! Planned future improvements include:
 - **Enhancing the dog-friendly experience** with more visuals, interactive elements, and hidden Easter eggs.  
 - **Multilingual support**, starting with Hebrew, to make the app accessible to a broader user base.  
 - **Strengthening security** by encrypting sensitive keys within the code and integrating additional protective measures such as DDoS prevention and Firebase authentication.
-- **Ongoing Debugging:** BFE is currently under active development, with a known issue causing the daily task generator to duplicate entries. A fix is in progress and is expected to be implemented within the next few days :)
+
 
 Stay tuned for updates! 📡✨
 
